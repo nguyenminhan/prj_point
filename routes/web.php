@@ -18,8 +18,7 @@
 
 Route::get('/', 'PointsController@point');
 
-// Route::get('getapi', 'PointsController@point');
 Route::post('getpoint', 'PointsController@getpoint');
-Route::post('getCustomer', 'PointsController@getCustomer')->name('getCustomer');
+
 
 

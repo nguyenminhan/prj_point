@@ -9,34 +9,22 @@
                     <form class="form-horizontal" method="POST" action="">
                         @csrf
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="mathanhvien">会員番号:</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" name="mathanhvien" placeholder="Mã thành viên" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
                               <label class="control-label col-sm-3" for="mathanhvien"></label>
                             <div class="col-sm-6"> 
                                 
-                                <input type="text" class="form-control" name="customer_code"  placeholder="customerCode">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="pwd">レシート:</label>
-                            <div class="col-sm-6"> 
-                                <input type="text" class="form-control" name="bienlai" placeholder="receipt" readonly>
+                            <input type="text" class="form-control" name="customer_code" id="customer_code" placeholder="customerCode"  style="height: 45px;">
                             </div>
                         </div>
                         <div class="form-group">
                              <label class="control-label col-sm-3" for="mathanhvien"></label>
                             <div class="col-sm-6"> 
                                
-                                <input type="text" class="form-control" name="transactionUuid" id="transactionUuid" placeholder="transactionUuid">
+                                <input type="text" class="form-control" name="transactionUuid" id="transactionUuid" placeholder="transactionUuid" style="height: 45px;">
                             </div>
                         </div>
                         <div class="form-group"> 
                             <div class="col-sm-offset-7 col-sm-9">
-                                <button type="submit" id="ok" class="btn btn-primary">OK</button>
+                                <button type="button" id="ok" class="btn btn-primary">OK</button>
                             </div>
                         </div>
                     </form>

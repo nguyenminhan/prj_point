@@ -26,10 +26,10 @@ class PointsController extends Controller
     	// dd($data);
     	return view('point.index');
     }
-
     public function getpoint(Request $request){
 
     	$data_all = $request->all();
+        dd($data_all);
     	$item = [
     		["transactionUuid" => $data_all['transactionUuid']]
     	];
@@ -49,12 +49,41 @@ class PointsController extends Controller
     	$rs = json_decode($rs,true);
 
     	$get_customer = $rs['result'];
+        $return ="";
+        $check = false;
+        $getAllCustomer = $this->getAllCustomer();
+        foreach ($get_customer as $value) {
+            foreach ($getAllCustomer as $value1) {
+                if($value['customerId'] == $value1['customerId'] ){
+                    $check = true;
+                    break;
+                }
+            }
+        }
+        if(!$check){
+            echo "khong ton tai ma bien lai";
+        }else{
+             echo $value['point'];
+        }
+        
+     
 
-
-    	return redirect()->route('getCustomer', compact('get_customer'));
     }
 
-    public function getCustomer(Request $req){
-    	echo "ok";
+    public function getAllCustomer(){
+
+        $params = [
+                "fields" => ["customerCode","lastName","firstName","customerId"],
+                "table_name" => "Customer"
+                ];
+        $data = [
+            "proc_name" => "customer_ref",
+            "params" => json_encode($params, true)
+        ];
+
+        $rs =  $this->pointapi->getApi($data);
+        $rs = json_decode($rs,true);
+        return $rs['result'];
+    	// dd($customer_id);
     }
 }
