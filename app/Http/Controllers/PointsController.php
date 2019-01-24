@@ -150,8 +150,8 @@ class PointsController extends Controller
             "proc_name" => "point_upd",
             "params" => json_encode($params,true)
         ];   		
-        $rs $this->pointapi->getApi($point_update);
-        return $rs;
-        // return $point;
+         $this->pointapi->getApi($point_update);
+        // return $rs;
+        return $point;
     }
 }

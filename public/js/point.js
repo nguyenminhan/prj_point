@@ -1,4 +1,18 @@
 
+  window.onload = function(e){ 
+    $('#customer_code').focus();
+  }
+
+  $(document).on('click', '.swal-button', function(e) {
+    if($('#customer_code').val() == ''){
+      $('#customer_code').focus();
+    }else if ($('#transactionUuid').val() == '') {
+       $('#transactionUuid').focus();
+    }else{
+      $('#customer_code').focus();
+    }
+  });
+
   $(document).on('keyup', '#customer_code', function(e) {
     var customer_code = $('#customer_code').val();
      // console.log(customer_code);
@@ -17,7 +31,7 @@
   	  var customer_code = $('#customer_code').val();
   	  var transactionUuid = $('#transactionUuid').val();
   	// console.log($('#customer_code').val() );
-  	if(customer_code == '' && transactionUuid == ''){
+  	if(customer_code == '' || transactionUuid == ''){
   		// alert('ok');
   		swal("Fail!", "Bạn không được để trống!", "warning");
   		return;
@@ -28,7 +42,7 @@
       $('#customer_code').focus();
     }
 
-    // if (localStorage.getItem("customer_code") == 13 && localStorage.getItem("transactionUuid") ===13 ) {
+    if (customer_code == 13 && transactionUuid ===13 ) {
           $.ajax({
              type:'POST',
              url:'/getpoint',
@@ -40,17 +54,25 @@
              
             }).done(function (response) {
             	// console.log(response);
-            	// swal("Done!", "Điểm hiện tại của bạn là:"+response, "success");
+            	swal("Done!", "Điểm hiện tại của bạn là:"+response, "success");
             	$('#customer_code').focus();
             	$('#transactionUuid').val(null);
- 				$('#customer_code').val(null);
+ 				     $('#customer_code').val(null);
             	localStorage.setItem("transactionUuid",'')
-              	localStorage.setItem("customer_code",'')
+              localStorage.setItem("customer_code",'')
               	
           });
-
+    }else{
+      swal("Fail!", "Mã barcode không hợp lệ!", "warning");
+      // $('#customer_code').focus();
+        $('#transactionUuid').val(null);
+        $('#customer_code').val(null);
+        localStorage.setItem("transactionUuid",'')
+        localStorage.setItem("customer_code",'')
+    }
         
     });
+
     $('.panel-body').on('keyup keypress', function(e) {
        var keyCode = e.keyCode || e.which;
        if (keyCode === 13) {
@@ -58,6 +80,8 @@
            return false;
        }
    });
+
+    
 
 
 	
