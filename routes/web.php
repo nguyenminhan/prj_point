@@ -18,6 +18,7 @@
 
 Route::get('/', 'PointsController@point');
 
+
 Route::post('getpoint', 'PointsController@getpoint');
 
 

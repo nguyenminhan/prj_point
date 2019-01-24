@@ -1,13 +1,93 @@
-{
-    "BRONZE": 1,
+[
+	{
+	    "id": 13,
 
-    "SILVER": 2,
+	    "code": 1,
 
-    "GOLD": 3,
+	    "rank": "BRONZE",
 
-    "PLATINUM":4,
+	    "status":"有効",
 
-    "DIAMOND" : 5,
+	    "number" : 1,
 
-    "EMP" :100
-}
+	    "point" :1
+	},
+	{
+	    "id": 14,
+
+	    "code": 2,
+
+	    "rank": "SILVER",
+
+	    "status":"有効",
+
+	    "number" : 2,
+
+	    "point" :3
+	},
+	{
+	    "id": 15,
+
+	    "code": 3,
+
+	    "rank": "GOLD",
+
+	    "status":"有効",
+
+	    "number" : 3,
+
+	    "point" :3
+	},
+	{
+	    "id": 16,
+
+	    "code": 4,
+
+	    "rank": "PLATINUM",
+
+	    "status":"有効",
+
+	    "number" : 4,
+
+	    "point" :5
+	},
+	{
+	    "id": 17,
+
+	    "code": 5,
+
+	    "rank": "DIAMOND",
+
+	    "status":"有効",
+
+	    "number" : 5,
+
+	    "point" :7
+	},
+	{
+	    "id": 18,
+
+	    "code": 6,
+
+	    "rank": "EMP",
+
+	    "status":"有効",
+
+	    "number" : 100,
+
+	    "point" :0
+	},
+	{
+	    "id": 20,
+
+	    "code": 7,
+
+	    "rank": "未登録会員",
+
+	    "status":"有効",
+
+	    "number" : 6,
+
+	    "point" :0
+	}
+]
