@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Library\APIHelper;
+use DB;
 
 
 class PointsController extends Controller
@@ -22,10 +23,11 @@ class PointsController extends Controller
 
     public function getpoint(Request $request){
 
-    	$data_all = $request->all();
-        
-        // goi api tra ve point
-    	$item = [
+    	
+    	// dd($data_all);
+        // try {
+			$data_all = $request->all();
+        	$item = [
     		["transactionUuid" => $data_all['transactionUuid']]
     	];
 
@@ -51,7 +53,7 @@ class PointsController extends Controller
     	];
 
     	$params1 = [
-    			"fields" => ["customerCode","lastName","firstName","customerId","rank"],
+    			"fields" => ["customerCode","lastName","firstName","customerId","rank","point"],
 				"conditions" => $item1 ,
 				"order" => ["customerCode desc"],
 				"table_name" => "Customer"
@@ -68,7 +70,8 @@ class PointsController extends Controller
 
     	
     	$get_customer = $rs1['result'][0]['customerCode'];
-    	
+    	$point_current =  $rs1['result'][0]['point'];
+
     	// goi api tra ve price
     	
     	$price_api=0;
@@ -82,11 +85,11 @@ class PointsController extends Controller
     	$jsonRank = file_get_contents(base_path('resources/lang/rank.json'));
     	$jsonRank = json_decode($jsonRank, true);
     	$rank = $rs1['result'][0]['rank'];
-    	$point=0;
+    	$point_new=0;
 		$check = false;
     	foreach ($jsonRank as  $value) {
     		if((int)$value['number'] == (int) $rank){
-    			$point += (int)($price_api/100) * $value['point'];
+    			$point_new += (int)($price_api/100) * $value['point'];
     			$check = true;
     			break;
     		}
@@ -94,9 +97,26 @@ class PointsController extends Controller
     	if(!$check){
     		swal("Fail!", "Không tồn tại rank!", "warning");
     	}
- 
-    	$update_point = $this->updatePoint($point,$rs1['result'][0]['customerId']);
-    	return $update_point;    
+
+ 		$point_total = (int)$point_current + $point_new;
+
+ 		$data_point = [
+ 			'transactionUuid' => $data_all['transactionUuid'],
+ 			'customerCode'    => $data_all['customer_code'],
+ 			'point_current'   => $point_current,
+ 			'point_new'		  => $point_new,
+ 			'point_total'	  => $point_total
+ 		];
+
+ 		DB::table('point')->insert($data_point);
+
+    	$update_point = $this->updatePoint($point_total,$rs1['result'][0]['customerId']);
+    	return $update_point;  
+        // } catch (Exception $e) {
+        // 	swal("Fail!", "Xin vui lòng thử lại mã quyét!", "warning");
+        // }
+        // goi api tra ve point
+    	  
 
     }
 
