@@ -1,14 +1,2 @@
-body {
-    font-family: "Roboto", Helvetica, Arial, sans-serif;
-    font-size: 14px;
-}
 
-.bgc-white, .bgcH-white {
-    background-color: #fff!important;
-}
-.bdrs-3 {
-    border-radius: 3px!important;
-}
-.bd {
-    border: 1px solid rgba(0,0,0,.0625)!important;
-}
+

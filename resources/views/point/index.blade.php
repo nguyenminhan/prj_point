@@ -28,4 +28,8 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">   
+  var history_point = [];
+  history_point = <?php echo  json_encode($transactionUuid); ?>; 
+</script>
 @endsection

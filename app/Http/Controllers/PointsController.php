@@ -18,7 +18,13 @@ class PointsController extends Controller
         $this->pointapi = new APIHelper();
     }
     public function point(){
-    	return view('point.index');
+
+        $point_history = DB::table('point')->select('transactionUuid')->get();
+        $transactionUuid =[];
+        foreach ($point_history as $key => $value) {
+            $transactionUuid[] =  $value->transactionUuid;
+        }
+    	return view('point.index',compact('transactionUuid'));
     }
 
     public function getpoint(Request $request){
@@ -174,4 +180,5 @@ class PointsController extends Controller
         // return $rs;
         return $point;
     }
+    
 }

@@ -8,7 +8,6 @@
 	<base href="{{asset('')}}">
 	<link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/style.css')}}">
-	<link rel="stylesheet" href="{{asset('assets/awesome/css/fontawesome-all.css')}}">
 	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="{{asset('js/barcoder.js')}}"></script>
