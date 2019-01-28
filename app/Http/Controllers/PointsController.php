@@ -101,7 +101,7 @@ class PointsController extends Controller
     		}
     	}
     	if(!$check){
-    		swal("Fail!", "Không tồn tại rank!", "warning");
+    		swal("Fail!", "don't exits rank!", "warning");
     	}
 
  		$point_total = (int)$point_current + $point_new;
