@@ -27,23 +27,25 @@
     localStorage.setItem('transactionUuid', transactionUuid);
     setTimeout(function(){$('#ok').focus();}, 500);
   });
+  
   $(document).on('click', '#ok', function(e) {
-
-
-  	// swal('Không được để trống');
   	e.preventDefault();
   	  var customer_code = ($('#customer_code').val()).trim();
   	  var transactionUuid = ($('#transactionUuid').val()).trim();
 
-      if(customer_code == '' || transactionUuid == ''){
-        swal("Fail!", "Bạn không được để trống!", "warning");
+      if(customer_code == ''){
+        swal("Fail!", "会員が存在しません。", "warning");
         return;
-    } 
+      }
+      if(transactionUuid == ''){
+        swal("Fail!", "レシートIDが存在しません。", "warning");
+        return;
+      }
 
       var check = false;
       for (var i  in history_point) {
         if(history_point[i] == transactionUuid){
-          swal("Fail!", "Mã barcode đã được sử dụng!", "warning");
+          swal("Fail!", "すでにこのレシートは登録されています。", "warning");
           check = true;
           break;
       }
@@ -59,8 +61,7 @@
              
             }).done(function (response) {
               // console.log(response);
-              swal("Done!", "Điểm hiện tại của bạn là:"+response, "success");
-              // location.reload();
+              swal("Done!", "今のポイントは"+response+"です", "success");
               $('#customer_code').focus();
               $('#transactionUuid').val(null);
               $('#customer_code').val(null);
@@ -68,8 +69,8 @@
               localStorage.setItem("customer_code",'')
                 
           }).fail(function (res) {
-              swal("Fail!", "Mã barcode không hợp lệ!", "warning");     
-           });
+              swal("Fail!", "会員が存在しません。", "warning");     
+          });
       }
 // console.log( customer_code + ' is valid: ' + Barcoder.validate( customer_code ) );
 //   console.log( transactionUuid + ' is valid: ' + Barcoder.validate( transactionUuid ) );
