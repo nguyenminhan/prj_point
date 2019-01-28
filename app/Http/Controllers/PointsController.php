@@ -29,10 +29,7 @@ class PointsController extends Controller
 
     public function getpoint(Request $request){
 
-    	
-    	// dd($data_all);
-        // try {
-			$data_all = $request->all();
+		$data_all = $request->all();
         	$item = [
     		["transactionUuid" => $data_all['transactionUuid']]
     	];
@@ -50,7 +47,6 @@ class PointsController extends Controller
     	$rs =  $this->pointapi->getApi($data);
 		$rs = json_decode($rs,true);
     	$get_point = $rs['result'];
-
 
     	// goi api tra ve customer
     
@@ -101,7 +97,7 @@ class PointsController extends Controller
     		}
     	}
     	if(!$check){
-    		swal("Fail!", "don't exits rank!", "warning");
+    		swal("エラーになりました。", "don't  exits rank!", "warning");
     	}
 
  		$point_total = (int)$point_current + $point_new;

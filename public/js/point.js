@@ -33,19 +33,20 @@
   	  var customer_code = ($('#customer_code').val()).trim();
   	  var transactionUuid = ($('#transactionUuid').val()).trim();
 
+
       if(customer_code == ''){
-        swal("Fail!", "会員が存在しません。", "warning");
+        swal("エラーになりました。", "会員が存在しません。", "warning");
         return;
       }
       if(transactionUuid == ''){
-        swal("Fail!", "レシートIDが存在しません。", "warning");
+        swal("エラーになりました。", "レシートIDが存在しません。", "warning");
         return;
       }
 
       var check = false;
       for (var i  in history_point) {
         if(history_point[i] == transactionUuid){
-          swal("Fail!", "すでにこのレシートは登録されています。", "warning");
+          swal("エラーになりました。", "すでにこのレシートは登録されています。", "warning");
           check = true;
           break;
       }
@@ -60,7 +61,6 @@
              },
              
             }).done(function (response) {
-              // console.log(response);
               swal("Done!", "今のポイントは"+response+"です", "success");
               $('#customer_code').focus();
               $('#transactionUuid').val(null);
@@ -69,7 +69,7 @@
               localStorage.setItem("customer_code",'')
                 
           }).fail(function (res) {
-              swal("Fail!", "会員が存在しません。", "warning");     
+              swal("エラーになりました。", "会員が存在しません。", "warning");     
           });
       }
 // console.log( customer_code + ' is valid: ' + Barcoder.validate( customer_code ) );
