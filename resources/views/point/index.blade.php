@@ -8,14 +8,14 @@
                     <div class="panel-body">   
                         <div class="form-group">
                             <label for="customer_code"><b>会員番号：</b></label>          
-                            <input type="text" class="form-control" name="customer_code" id="customer_code" placeholder="customerCode"   style="height: 60px;">
+                            <input type="text" class="form-control" name="customer_code" id="customer_code" placeholder="customerCode"">
                         </div>
                         <div class="form-group"> 
                             <label for="customer_code"><b>レシート：</b></label>                             
-                            <input type="text" class="form-control" name="transactionUuid" id="transactionUuid" placeholder="transactionUuid" style="height: 60px;">
+                            <input type="text" class="form-control" name="transactionUuid" id="transactionUuid" placeholder="transactionUuid">
                         </div>
                         <div class="form-group"> 
-                            <button style="margin: 0px auto;width: 100%;display: block;height: 60px;background-color: #7b42ca;" type="button" id="ok" class="btn btn-primary">送信する</button>
+                            <button type="button" id="ok" class="btn btn-primary">送信する</button>
                         </div>
                     </div>
                 </div>
