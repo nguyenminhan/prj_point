@@ -29,6 +29,7 @@ class PointsController extends Controller
     public function getpoint(Request $request){
 
 		$data_all = $request->all();
+
         	$item = [
     		["transactionUuid" => $data_all['transactionUuid']]
     	];
@@ -46,7 +47,7 @@ class PointsController extends Controller
     	$rs =  $this->pointapi->getApi($data);
 		$rs = json_decode($rs,true);
     	$get_point = $rs['result'];
-
+       
     	// goi api tra ve customer
     
     	$item1 = [
@@ -69,8 +70,9 @@ class PointsController extends Controller
  
     	$rs1 = json_decode($rs1,true);
 
-    	
+    
     	$get_customer = $rs1['result'][0]['customerCode'];
+
     	$point_current =  $rs1['result'][0]['point'];
 
     	// goi api tra ve price
@@ -122,6 +124,7 @@ class PointsController extends Controller
     }
 
     public function getPriceByTractionHeadID($transactionHeadId){
+
     	$item = [
     		["transactionHeadId" => $transactionHeadId]
     	];
@@ -141,7 +144,8 @@ class PointsController extends Controller
 
         $price=0;
     	foreach ($rs['result']  as  $value) {
-    		$price+=$value['price'];
+           dd($value);
+    		$price+=($value['salesPrice'] * $value['quantity']) ;
     	}
         return $price;
     }

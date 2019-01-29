@@ -34,6 +34,7 @@
   	  var transactionUuid = ($('#transactionUuid').val()).trim();
 
 
+
       if(customer_code == ''){
         swal("エラーになりました。", "会員が存在しません。", "warning");     
         return;
@@ -66,6 +67,7 @@
              },
              
             }).done(function (response) {
+  
               swal("Done!", "今のポイントは"+response+"です", "success");
               $('#customer_code').focus();
               $('#transactionUuid').val(null);
