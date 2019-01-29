@@ -31,5 +31,6 @@
 <script type="text/javascript">   
   var history_point = [];
   history_point = <?php echo  json_encode($transactionUuid); ?>; 
+  var url = "{{route('point')}}"
 </script>
 @endsection

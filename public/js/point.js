@@ -1,6 +1,6 @@
 
   window.onload = function(e){ 
-    $('#customer_code').focus();+"/n"
+    $('#customer_code').focus();
   }
 
   $(document).on('click', '.swal-button', function(e) {
@@ -29,15 +29,20 @@
   });
   
   $(document).on('click', '#ok', function(e) {
-  	e.preventDefault();
+  	  e.preventDefault();
   	  var customer_code = ($('#customer_code').val()).trim();
   	  var transactionUuid = ($('#transactionUuid').val()).trim();
 
 
       if(customer_code == ''){
-        swal("エラーになりました。", "会員が存在しません。", "warning");
+        swal("エラーになりました。", "会員が存在しません。", "warning");     
         return;
       }
+      // else{
+      //   var val = localStorage.getItem("customer_code") === null ? "": localStorage.getItem("customer_code");
+      //   console.log(val);
+      //   $('#customer_code').val(val);
+      // }
       if(transactionUuid == ''){
         swal("エラーになりました。", "レシートIDが存在しません。", "warning");
         return;
@@ -54,7 +59,7 @@
       if (!check) {
         $.ajax({
              type:'POST',
-             url:'/getpoint',
+             url:url,
              data:{
                 'transactionUuid' : localStorage.getItem("transactionUuid"),
                 'customer_code' : localStorage.getItem("customer_code")

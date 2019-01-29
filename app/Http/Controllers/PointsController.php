@@ -10,7 +10,6 @@ use DB;
 class PointsController extends Controller
 {
 
-
     protected $pointapi;
 
     public function __construct()

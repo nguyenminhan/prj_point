@@ -19,7 +19,7 @@
 Route::get('/', 'PointsController@point');
 
 
-Route::post('getpoint', 'PointsController@getpoint');
+Route::post('getpoint', 'PointsController@getpoint')->name('point');
 
 
 

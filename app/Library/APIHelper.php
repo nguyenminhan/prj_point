@@ -30,8 +30,7 @@ class APIHelper
             'X_access_token:'. $this->access_token,
             'X_contract_id:'.$this->contract_id
         );
-        // dd($params);
-        // dd(http_build_query($params));
+        
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->url);
         curl_setopt($curl, CURLOPT_POST, 1);
