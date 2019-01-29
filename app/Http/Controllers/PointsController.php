@@ -144,7 +144,6 @@ class PointsController extends Controller
 
         $price=0;
     	foreach ($rs['result']  as  $value) {
-           dd($value);
     		$price+=($value['salesPrice'] * $value['quantity']) ;
     	}
         return $price;
