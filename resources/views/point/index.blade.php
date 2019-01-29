@@ -15,7 +15,7 @@
                             <input type="text" class="form-control" name="transactionUuid" id="transactionUuid" placeholder="transactionUuid" style="height: 60px;">
                         </div>
                         <div class="form-group"> 
-                            <button style="margin: 0px auto;width: 100%;display: block;height: 60px;" type="button" id="ok" class="btn btn-primary">送信する</button>
+                            <button style="margin: 0px auto;width: 100%;display: block;height: 60px;background-color: #7b42ca;" type="button" id="ok" class="btn btn-primary">送信する</button>
                         </div>
                     </div>
                 </div>
