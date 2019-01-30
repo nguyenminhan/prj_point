@@ -67,15 +67,27 @@
              },
              
             }).done(function (response) {
+              result = JSON.parse(response);
+              if (result.error_code != 0) {
+                  if(result.error_code == 6) {
+                      swal("エラーになりました。",result.error_msg, "warning");     
+                  }
+                  
+              }
               swal("ポイント付与完了しました。", "今のポイントは"+response+"です", "success");
+              
+              
               $('#customer_code').focus();
               $('#transactionUuid').val(null);
               $('#customer_code').val(null);
               localStorage.setItem("transactionUuid",'')
               localStorage.setItem("customer_code",'')
                 
-          }).fail(function (res) {
-              swal("エラーになりました。", "会員が存在しません。", "warning");     
+          }).fail(function (response) {
+            // console.log(res);
+           
+              // console.log(result.message);
+              swal("エラーになりました。","会員が存在しません。", "warning");     
           });
       }
 // console.log( customer_code + ' is valid: ' + Barcoder.validate( customer_code ) );

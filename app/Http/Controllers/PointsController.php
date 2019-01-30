@@ -47,7 +47,7 @@ class PointsController extends Controller
     	$rs =  $this->pointapi->getApi($data);
 		$rs = json_decode($rs,true);
     	$get_point = $rs['result'];
-       dd($get_point);
+
     	// goi api tra ve customer
     
     	$item1 = [
@@ -81,9 +81,14 @@ class PointsController extends Controller
     	foreach ($get_point  as  $value) {
     		if($get_customer == $value['customerCode']){
     			$price = $this->getPriceByTractionHeadID($value['transactionHeadId']);
-    			$price_api+=$price;
-    			
-    		}
+    			$price_api+=$price; 			
+    		}else{
+                return json_encode(array(
+                        'error_code'  => 6,
+                        'error_msg' => '会員が存在しません。'
+                ));
+                exit();
+            }
     	}
     	$jsonRank = file_get_contents(base_path('resources/lang/rank.json'));
     	$jsonRank = json_decode($jsonRank, true);
