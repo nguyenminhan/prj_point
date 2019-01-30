@@ -67,8 +67,7 @@
              },
              
             }).done(function (response) {
-  
-              swal("Done!", "今のポイントは"+response+"です", "success");
+              swal("ポイント付与完了しました。", "今のポイントは"+response+"です", "success");
               $('#customer_code').focus();
               $('#transactionUuid').val(null);
               $('#customer_code').val(null);

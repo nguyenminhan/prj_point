@@ -47,7 +47,7 @@ class PointsController extends Controller
     	$rs =  $this->pointapi->getApi($data);
 		$rs = json_decode($rs,true);
     	$get_point = $rs['result'];
-       
+       dd($get_point);
     	// goi api tra ve customer
     
     	$item1 = [
@@ -111,14 +111,12 @@ class PointsController extends Controller
  			'point_total'	  => $point_total
  		];
 
+
  		DB::table('point')->insert($data_point);
 
     	$update_point = $this->updatePoint($point_total,$rs1['result'][0]['customerId']);
     	return $update_point;  
-        // } catch (Exception $e) {
-        // 	swal("Fail!", "Xin vui lòng thử lại mã quyét!", "warning");
-        // }
-        // goi api tra ve point
+
     	  
 
     }
