@@ -98,6 +98,7 @@ class PointsController extends Controller
     	$price_api=0;
     	foreach ($get_point  as  $value) {
     		if($get_customer == $value['customerCode']){
+
     			$price_api+=$value['subtotal']; 			
     		}else{
                 return json_encode(array(
@@ -113,8 +114,10 @@ class PointsController extends Controller
     	$point_new=0;
 		$check3 = false;
     	foreach ($jsonRank as  $value) {
-    		if((int)$value['number'] == (int) $rank){
-    			$point_new += (int)($price_api/100) * $value['point'];
+    		if((int)$value['number'] == (int)$rank){
+                if($price_api > 0){
+                    $point_new += (int)($price_api/100) * $value['point'];
+                }
     			$check3 = true;
     			break;
     		}
