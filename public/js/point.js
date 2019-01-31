@@ -33,8 +33,6 @@
   	  var customer_code = ($('#customer_code').val()).trim();
   	  var transactionUuid = ($('#transactionUuid').val()).trim();
 
-
-
       if(customer_code == ''){
         swal("エラーになりました。", "会員が存在しません。", "warning");     
         return;
@@ -76,8 +74,7 @@
                   }else if(result.error_code == 7){
                     swal("エラーになりました。",result.error_msg, "warning");   
                     return;
-                  }
-                  
+                  }                 
               }
               swal("ポイント付与完了しました。", "今のポイントは"+response+"です", "success");           
               $('#customer_code').focus();

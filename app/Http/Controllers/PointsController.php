@@ -91,17 +91,14 @@ class PointsController extends Controller
         }else{
             $get_customer = $rs1['result'][0]['customerCode'];
             $point_current =  $rs1['result'][0]['point'];
-        }
-    
-    
+        }       
 
     	// goi api tra ve price
     	
     	$price_api=0;
     	foreach ($get_point  as  $value) {
     		if($get_customer == $value['customerCode']){
-    			$price = $this->getPriceByTractionHeadID($value['transactionHeadId']);
-    			$price_api+=$price; 			
+    			$price_api+=$value['subtotal']; 			
     		}else{
                 return json_encode(array(
                         'error_code'  => 6,
@@ -150,31 +147,31 @@ class PointsController extends Controller
 
     }
 
-    public function getPriceByTractionHeadID($transactionHeadId){
+    // public function getPriceByTractionHeadID($transactionHeadId){
 
-    	$item = [
-    		["transactionHeadId" => $transactionHeadId]
-    	];
+    // 	$item = [
+    // 		["transactionHeadId" => $transactionHeadId]
+    // 	];
 
-        $params = [
-                "conditions" => $item,
-                "order" => ["transactionHeadId","transactionDetailId"],
-                "table_name" => "TransactionDetail"
-                ];
-        $data = [
-            "proc_name" => "transaction_ref",
-            "params" => json_encode($params, true)
-        ];
+    //     $params = [
+    //             "conditions" => $item,
+    //             "order" => ["transactionHeadId","transactionDetailId"],
+    //             "table_name" => "TransactionDetail"
+    //             ];
+    //     $data = [
+    //         "proc_name" => "transaction_ref",
+    //         "params" => json_encode($params, true)
+    //     ];
 
-        $rs =  $this->pointapi->getApi($data);
-        $rs = json_decode($rs,true);
+    //     $rs =  $this->pointapi->getApi($data);
+    //     $rs = json_decode($rs,true);
 
-        $price=0;
-    	foreach ($rs['result']  as  $value) {
-    		$price+=($value['salesPrice'] * $value['quantity']) ;
-    	}
-        return $price;
-    }
+    //     $price=0;
+    // 	foreach ($rs['result']  as  $value) {
+    // 		$price+=($value['salesPrice'] * $value['quantity']) ;
+    // 	}
+    //     return $price;
+    // }
     public function updatePoint($point,$customer_id){
     	$proc_info = [
 	    		"proc_division" => "U",
