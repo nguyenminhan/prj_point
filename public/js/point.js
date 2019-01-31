@@ -16,17 +16,18 @@
     }
   });
 
-  $(document).on('keyup', '#customer_code', function(e) {
+  // $(document).on('keyup', '#customer_code', function(e) {
     var customer_code = $('#customer_code').val();
     localStorage.setItem('customer_code', customer_code);
-    setTimeout(function(){$('#transactionUuid').focus();}, 500);
-  });
+    // $('#transactionUuid').focus()
+    // setTimeout(function(){$('#transactionUuid').focus();}, 2000);
+  // });
 
-  $(document).on('keyup', '#transactionUuid', function(e) {
+  // $(document).on('keyup', '#transactionUuid', function(e) {
     var transactionUuid = $('#transactionUuid').val();
     localStorage.setItem('transactionUuid', transactionUuid);
-    setTimeout(function(){$('#ok').focus();}, 500);
-  });
+    // setTimeout(function(){$('#ok').focus();}, 2000);
+  // });
   
   $(document).on('click', '#ok', function(e) {
   	  e.preventDefault();
