@@ -16,23 +16,29 @@
     }
   });
 
-  // $(document).on('keyup', '#customer_code', function(e) {
+  $(document).on('keyup', '#customer_code', function(e) {
     var customer_code = $('#customer_code').val();
     localStorage.setItem('customer_code', customer_code);
     // $('#transactionUuid').focus()
     // setTimeout(function(){$('#transactionUuid').focus();}, 2000);
-  // });
+  });
 
-  // $(document).on('keyup', '#transactionUuid', function(e) {
+  $(document).on('keyup', '#transactionUuid', function(e) {
     var transactionUuid = $('#transactionUuid').val();
     localStorage.setItem('transactionUuid', transactionUuid);
     // setTimeout(function(){$('#ok').focus();}, 2000);
-  // });
+  });
   
   $(document).on('click', '#ok', function(e) {
   	  e.preventDefault();
   	  var customer_code = ($('#customer_code').val()).trim();
   	  var transactionUuid = ($('#transactionUuid').val()).trim();
+
+      // if(customer_code){
+      //   var value = localStorage.getItem("customer_code") === null ? "": localStorage.getItem("customer_code")
+      //   $('#customer_code').val(value)
+      // }
+      
 
       if(customer_code == ''){
         swal("エラーになりました。", "会員が存在しません。", "warning");     
