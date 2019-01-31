@@ -2,9 +2,6 @@
 
 namespace App\Library;
 
-use GuzzleHttp\Client;
-// use Illuminate\Support\Facades\Session;
-
 class APIHelper
 {
     protected $url;
@@ -18,9 +15,6 @@ class APIHelper
         $this->url = env('URL_POINT');
         $this->contract_id = env('CONTRACT_ID');
         $this->access_token = env('ACCESS_TOKEN');
-
-
-
     }
 
     public function getApi($params=array())
@@ -30,7 +24,7 @@ class APIHelper
             'X_access_token:'. $this->access_token,
             'X_contract_id:'.$this->contract_id
         );
-        
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->url);
         curl_setopt($curl, CURLOPT_POST, 1);

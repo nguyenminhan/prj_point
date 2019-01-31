@@ -10,7 +10,6 @@
 	<link rel="stylesheet" href="{{asset('assets/style.css')}}">
 	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="{{asset('js/barcoder.js')}}"></script>
 	<script>
 	    $.ajaxSetup({
 	        headers: {

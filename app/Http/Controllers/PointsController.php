@@ -30,7 +30,9 @@ class PointsController extends Controller
 
 		$data_all = $request->all();
 
-        	$item = [
+        // goi api tra ve transactionHeadId
+        
+        $item = [
     		["transactionUuid" => $data_all['transactionUuid']]
     	];
 
@@ -45,8 +47,18 @@ class PointsController extends Controller
     	];
 
     	$rs =  $this->pointapi->getApi($data);
+
 		$rs = json_decode($rs,true);
+
     	$get_point = $rs['result'];
+  // dd($get_point);
+        if(empty($get_point)){
+            return json_encode(array(
+                    'error_code'  => 4,
+                    'error_msg' => 'レシートIDが存在しません。'
+                ));
+            die;
+        }
 
     	// goi api tra ve customer
     
@@ -69,11 +81,19 @@ class PointsController extends Controller
 
  
     	$rs1 = json_decode($rs1,true);
-
+      
+        if(empty($rs1['result'])){
+            return json_encode(array(
+                    'error_code'  => 5,
+                    'error_msg' => '会員が存在しません。'
+                ));
+            die;
+        }else{
+            $get_customer = $rs1['result'][0]['customerCode'];
+            $point_current =  $rs1['result'][0]['point'];
+        }
     
-    	$get_customer = $rs1['result'][0]['customerCode'];
-
-    	$point_current =  $rs1['result'][0]['point'];
+    
 
     	// goi api tra ve price
     	
@@ -94,16 +114,20 @@ class PointsController extends Controller
     	$jsonRank = json_decode($jsonRank, true);
     	$rank = $rs1['result'][0]['rank'];
     	$point_new=0;
-		$check = false;
+		$check3 = false;
     	foreach ($jsonRank as  $value) {
     		if((int)$value['number'] == (int) $rank){
     			$point_new += (int)($price_api/100) * $value['point'];
-    			$check = true;
+    			$check3 = true;
     			break;
     		}
     	}
-    	if(!$check){
-    		swal("エラーになりました。", "don't  exits rank!", "warning");
+    	if(!$check3){
+            return json_encode(array(
+                    'error_code'  => 7,
+                    'error_msg' => 'このランクが存在しません。'
+                ));
+            exit();
     	}
 
  		$point_total = (int)$point_current + $point_new;

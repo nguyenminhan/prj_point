@@ -39,11 +39,6 @@
         swal("エラーになりました。", "会員が存在しません。", "warning");     
         return;
       }
-      // else{
-      //   var val = localStorage.getItem("customer_code") === null ? "": localStorage.getItem("customer_code");
-      //   console.log(val);
-      //   $('#customer_code').val(val);
-      // }
       if(transactionUuid == ''){
         swal("エラーになりました。", "レシートIDが存在しません。", "warning");
         return;
@@ -70,13 +65,21 @@
               result = JSON.parse(response);
               if (result.error_code != 0) {
                   if(result.error_code == 6) {
-                      swal("エラーになりました。",result.error_msg, "warning");     
+                    swal("エラーになりました。",result.error_msg, "warning");  
+                    return;   
+                  }else if(result.error_code == 5){
+                    swal("エラーになりました。",result.error_msg, "warning");   
+                    return;
+                  }else if(result.error_code == 4){
+                    swal("エラーになりました。",result.error_msg, "warning");   
+                    return;
+                  }else if(result.error_code == 7){
+                    swal("エラーになりました。",result.error_msg, "warning");   
+                    return;
                   }
                   
               }
-              swal("ポイント付与完了しました。", "今のポイントは"+response+"です", "success");
-              
-              
+              swal("ポイント付与完了しました。", "今のポイントは"+response+"です", "success");           
               $('#customer_code').focus();
               $('#transactionUuid').val(null);
               $('#customer_code').val(null);
@@ -84,33 +87,10 @@
               localStorage.setItem("customer_code",'')
                 
           }).fail(function (response) {
-            // console.log(res);
-           
-              // console.log(result.message);
               swal("エラーになりました。","会員が存在しません。", "warning");     
           });
-      }
-// console.log( customer_code + ' is valid: ' + Barcoder.validate( customer_code ) );
-//   console.log( transactionUuid + ' is valid: ' + Barcoder.validate( transactionUuid ) );
-
-//   return;
- //  	if (transactionUuid.charAt(0) !== 'A' && transactionUuid.charAt(transactionUuid.length-1) !== 'A') {
- //  		swal("Fail!", "Mã barcode không hợp lệ!", "warning"); 
- //  		return;
-	// }
-  	// console.log($('#customer_code').val() );
-  	
-    // if(Barcoder.validate(transactionUuid) == true ){
-          
-    // }else{
-    //   swal("Fail!", "Mã barcode không hợp lệ!", "warning");
-    //     $('#transactionUuid').val(null);
-    //     $('#customer_code').val(null);
-    //     localStorage.setItem("transactionUuid",'')
-    //     localStorage.setItem("customer_code",'')
-    // }
-        
-    });
+      }       
+   });
 
     $('.panel-body').on('keyup keypress', function(e) {
        var keyCode = e.keyCode || e.which;
