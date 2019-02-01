@@ -27,9 +27,19 @@ class PointsController extends Controller
     }
 
     public function getpoint(Request $request){
-
 		$data_all = $request->all();
 
+        $count_point = DB::table('point')
+        ->where('transactionUuid', '=', $request->transactionUuid)
+        ->where('customerCode', '=', $request->customer_code)
+        ->count();
+
+        if($count_point > 0) {
+            return json_encode(array(
+                'error_code'  => 8,
+                'error_msg' => 'すでにこのレシートは登録されています。'
+            ));
+        }
         // goi api tra ve transactionHeadId
         
         $item = [
@@ -37,10 +47,10 @@ class PointsController extends Controller
     	];
 
     	$params = [
-				"conditions" => $item ,
-				"order" => ["transactionHeadId"],
-				"table_name" => "TransactionHead"
-				];
+            "conditions" => $item ,
+            "order" => ["transactionHeadId"],
+            "table_name" => "TransactionHead"
+		];
     	$data = [
     		"proc_name" => "transaction_ref",
     		"params" => json_encode($params, true)
@@ -51,17 +61,15 @@ class PointsController extends Controller
 		$rs = json_decode($rs,true);
 
     	$get_point = $rs['result'];
-  // dd($get_point);
         if(empty($get_point)){
             return json_encode(array(
-                    'error_code'  => 4,
-                    'error_msg' => 'レシートIDが存在しません。'
-                ));
+                'error_code'  => 4,
+                'error_msg' => 'レシートIDが存在しません。'
+            ));
             die;
         }
 
     	// goi api tra ve customer
-    
     	$item1 = [
     		["customerCode" => $data_all['customer_code']]
     	];
@@ -124,9 +132,9 @@ class PointsController extends Controller
     	}
     	if(!$check3){
             return json_encode(array(
-                    'error_code'  => 7,
-                    'error_msg' => 'このランクが存在しません。'
-                ));
+                'error_code'  => 7,
+                'error_msg' => 'このランクが存在しません。'
+            ));
             exit();
     	}
 
@@ -144,10 +152,11 @@ class PointsController extends Controller
  		DB::table('point')->insert($data_point);
 
     	$update_point = $this->updatePoint($point_total,$rs1['result'][0]['customerId']);
-    	return $update_point;  
-
-    	  
-
+        // return $update_point;
+        return json_encode(array(
+            'error_code'  => 0,
+            'id' => $update_point
+        ));
     }
 
     // public function getPriceByTractionHeadID($transactionHeadId){
