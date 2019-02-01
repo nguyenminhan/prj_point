@@ -29,28 +29,6 @@ class PointsController extends Controller
     public function getpoint(Request $request){
 		$data_all = $request->all();
 
-        //kiem tra customerCode có transactionUuid hay khong
-        $item_check_custom = [
-    		["customerCode" => $data_all['customer_code']]
-    	];
-    	$params_check_custom = [
-            "conditions" => $item_check_custom ,
-            "order" => ["transactionHeadId"],
-            "table_name" => "TransactionHead"
-		];
-    	$data_check_custom = [
-    		"proc_name" => "transaction_ref",
-    		"params" => json_encode($params_check_custom, true)
-    	];
-    	$rs =  $this->pointapi->getApi($data_check_custom);
-		$rs = json_decode($rs,true);
-        if(count($rs['result']) > 0) {
-            return json_encode(array(
-                'error_code'  => 6,
-                'error_msg' => 'すでにこのレシートは登録されています。'
-            ));
-        }
-
         $count_point = DB::table('point')
         ->where('transactionUuid', '=', $request->transactionUuid)
         // ->where('customerCode', '=', $request->customer_code)
@@ -119,6 +97,12 @@ class PointsController extends Controller
     	// goi api tra ve price
     	$price_api = 0;
     	foreach ($get_point  as  $value) {
+            if($get_customer == $value['customerCode']) {
+                return json_encode(array(
+                    'error_code'  => 6,
+                    'error_msg' => 'すでにこのレシートは登録されています。'
+                ));
+            }
     		$price_api += $value['subtotal']; 			
     	}
     	$jsonRank = file_get_contents(base_path('resources/lang/rank.json'));
