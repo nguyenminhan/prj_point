@@ -31,7 +31,7 @@ class PointsController extends Controller
 
         $count_point = DB::table('point')
         ->where('transactionUuid', '=', $request->transactionUuid)
-        ->where('customerCode', '=', $request->customer_code)
+        // ->where('customerCode', '=', $request->customer_code)
         ->count();
 
         if($count_point > 0) {
@@ -45,7 +45,6 @@ class PointsController extends Controller
         $item = [
     		["transactionUuid" => $data_all['transactionUuid']]
     	];
-
     	$params = [
             "conditions" => $item ,
             "order" => ["transactionHeadId"],
@@ -55,13 +54,10 @@ class PointsController extends Controller
     		"proc_name" => "transaction_ref",
     		"params" => json_encode($params, true)
     	];
-
     	$rs =  $this->pointapi->getApi($data);
-
 		$rs = json_decode($rs,true);
-
     	$get_point = $rs['result'];
-        if(empty($get_point)){
+        if(empty($get_point)) {
             return json_encode(array(
                 'error_code'  => 4,
                 'error_msg' => 'レシートIDが存在しません。'
@@ -75,26 +71,23 @@ class PointsController extends Controller
     	];
 
     	$params1 = [
-    			"fields" => ["customerCode","lastName","firstName","customerId","rank","point"],
-				"conditions" => $item1 ,
-				"order" => ["customerCode desc"],
-				"table_name" => "Customer"
-				];
+            "fields" => ["customerCode","lastName","firstName","customerId","rank","point"],
+            "conditions" => $item1 ,
+            "order" => ["customerCode desc"],
+            "table_name" => "Customer"
+        ];
     	$data1 = [
     		"proc_name" => "customer_ref",
     		"params" => json_encode($params1, true)
     	];
-
     	$rs1 =  $this->pointapi->getApi($data1);
 
- 
-    	$rs1 = json_decode($rs1,true);
-      
+    	$rs1 = json_decode($rs1, true);
         if(empty($rs1['result'])){
             return json_encode(array(
-                    'error_code'  => 5,
-                    'error_msg' => '会員が存在しません。'
-                ));
+                'error_code'  => 5,
+                'error_msg' => '会員が存在しません。'
+            ));
             die;
         }else{
             $get_customer = $rs1['result'][0]['customerCode'];
@@ -102,19 +95,17 @@ class PointsController extends Controller
         }       
 
     	// goi api tra ve price
-    	
-    	$price_api=0;
+    	$price_api = 0;
     	foreach ($get_point  as  $value) {
-    		if($get_customer == $value['customerCode']){
-
-    			$price_api+=$value['subtotal']; 			
-    		}else{
-                return json_encode(array(
-                        'error_code'  => 6,
-                        'error_msg' => '会員が存在しません。'
-                ));
-                exit();
-            }
+    		if($get_customer != $value['customerCode']){
+    			$price_api += $value['subtotal']; 			
+            } 
+            // else {
+            //     return json_encode(array(
+            //         'error_code'  => 6,
+            //         'error_msg' => '会員が存在しません。'
+            //     ));
+            // }
     	}
     	$jsonRank = file_get_contents(base_path('resources/lang/rank.json'));
     	$jsonRank = json_decode($jsonRank, true);
@@ -147,7 +138,6 @@ class PointsController extends Controller
  			'point_new'		  => $point_new,
  			'point_total'	  => $point_total
  		];
-
 
  		DB::table('point')->insert($data_point);
 
