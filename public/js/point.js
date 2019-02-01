@@ -70,7 +70,7 @@
             result = JSON.parse(response);
             if (result.error_code != 0) {
                 if(result.error_code == 6) {
-                  swal("エラーになりました。",result.error_msg, "warning");  
+                  swal("",result.error_msg, "warning");  
                   return;   
                 }else if(result.error_code == 5){
                   swal("エラーになりました。",result.error_msg, "warning");   
