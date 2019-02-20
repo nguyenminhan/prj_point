@@ -20,6 +20,6 @@
 </head>
 <body>
 	@yield('content')
-	<script src="{{asset('js/point.js')}}?v=1.0.2"></script>
+	<script src="{{asset('js/point.js')}}"></script>
 </body>
 </html>

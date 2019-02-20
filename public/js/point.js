@@ -68,6 +68,7 @@
             },
           }).done(function (response) {
             result = JSON.parse(response);
+
             if (result.error_code != 0) {
                 if(result.error_code == 6) {
                   swal("",result.error_msg, "warning");  
@@ -81,7 +82,10 @@
                 }else if(result.error_code == 7){
                   swal("エラーになりました。",result.error_msg, "warning");   
                   return;
-                } else if(result.error_code == 8) {
+                } else if(result.error_code == 9){
+                  swal("エラーになりました。",result.error_msg, "warning");   
+                  return;
+                }else if(result.error_code == 8) {
                   swal("エラーになりました。",result.error_msg, "warning");   
                   return;
                 }              

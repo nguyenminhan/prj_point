@@ -17,13 +17,7 @@ class PointsController extends Controller
         $this->pointapi = new APIHelper();
     }
     public function point(){
-
-        $point_history = DB::table('point')->select('transactionUuid')->get();
-        $transactionUuid =[];
-        foreach ($point_history as $key => $value) {
-            $transactionUuid[] =  $value->transactionUuid;
-        }
-    	return view('point.index',compact('transactionUuid'));
+    	return view('point.index');
     }
 
     public function getpoint(Request $request){
@@ -34,6 +28,7 @@ class PointsController extends Controller
         // ->where('customerCode', '=', $request->customer_code)
         ->count();
 
+// dd($count_point);
         if($count_point > 0) {
             return json_encode(array(
                 'error_code'  => 8,
@@ -56,6 +51,11 @@ class PointsController extends Controller
     	];
     	$rs =  $this->pointapi->getApi($data);
 		$rs = json_decode($rs,true);
+
+         
+      
+
+
     	$get_point = $rs['result'];
         if(empty($get_point)) {
             return json_encode(array(
@@ -129,22 +129,44 @@ class PointsController extends Controller
 
  		$point_total = (int)$point_current + $point_new;
 
- 		$data_point = [
- 			'transactionUuid' => $data_all['transactionUuid'],
- 			'customerCode'    => $data_all['customer_code'],
- 			'point_current'   => $point_current,
- 			'point_new'		  => $point_new,
- 			'point_total'	  => $point_total
- 		];
+        // check receipt quá 3 tháng thì k được update point
+        // 
+        $date_api = $rs['result'][0]['transactionDateTime'];
+        $date_api = strtotime($date_api);
+        // $date_api = date('Y-m-d H:i:s', $date_api);
+        $date_api = mktime(date("H",$date_api), date("i",$date_api), date("s",$date_api), date("m", $date_api)+3, date("d", $date_api),   date("Y", $date_api));
+        // $date_api = date('Y-m-d H:i:s', $date_api);
+        // echo $date_api."<br>";
+       
+        $date_current = date('Y-m-d H:i:s');
+        $date_current = strtotime($date_current);
+        // echo $date_current."<br>";die;
+        if($date_api < $date_current){
+            return json_encode(array(
+                'error_code'  => 9,
+                'error_msg' => 'レシートの期限は三か月までです。このレシートは期限切れになりました。'
+            ));
+            exit();
+        }else{
+            $data_point = [
+            'transactionUuid' => $data_all['transactionUuid'],
+            'customerCode'    => $data_all['customer_code'],
+            'point_current'   => $point_current,
+            'point_new'       => $point_new,
+            'point_total'     => $point_total
+            ];
 
- 		DB::table('point')->insert($data_point);
+            DB::table('point')->insert($data_point);
 
-    	$update_point = $this->updatePoint($point_total,$rs1['result'][0]['customerId']);
-        // return $update_point;
-        return json_encode(array(
-            'error_code'  => 0,
-            'id' => $update_point
-        ));
+            $update_point = $this->updatePoint($point_total,$rs1['result'][0]['customerId']);
+            // return $update_point;
+            return json_encode(array(
+                'error_code'  => 0,
+                'id' => $update_point,
+                
+            ));
+        }	
+
     }
 
     // public function getPriceByTractionHeadID($transactionHeadId){
