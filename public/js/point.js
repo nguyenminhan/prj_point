@@ -5,8 +5,8 @@
 
   $(document).on('click', '.swal-button', function(e) {
    	location.reload();
-    localStorage.setItem("transactionUuid",'')
-    localStorage.setItem("customer_code",'')
+    // localStorage.setItem("transactionUuid",'')
+    // localStorage.setItem("customer_code",'')
     if($('#customer_code').val() == ''){
       $('#customer_code').focus();
     }else if ($('#transactionUuid').val() == '') {
@@ -94,8 +94,8 @@
             $('#customer_code').focus();
             $('#transactionUuid').val(null);
             $('#customer_code').val(null);
-            localStorage.setItem("transactionUuid",'')
-            localStorage.setItem("customer_code",'')
+            // localStorage.setItem("transactionUuid",'')
+            // localStorage.setItem("customer_code",'')
         }).fail(function (response) {
           swal("エラーになりました。","会員が存在しません。", "warning");     
         });
