@@ -16,18 +16,18 @@
     }
   });
 
-  $(document).on('keyup', '#customer_code', function(e) {
-    var customer_code = $('#customer_code').val();
-    localStorage.setItem('customer_code', customer_code);
+  // $(document).on('keyup', '#customer_code', function(e) {
+    // var customer_code = $('#customer_code').val();
+    // localStorage.setItem('customer_code', customer_code);
     // $('#transactionUuid').focus()
     // setTimeout(function(){$('#transactionUuid').focus();}, 2000);
-  });
+  // });
 
-  $(document).on('keyup', '#transactionUuid', function(e) {
-    var transactionUuid = $('#transactionUuid').val();
-    localStorage.setItem('transactionUuid', transactionUuid);
+  // $(document).on('keyup', '#transactionUuid', function(e) {
+    // var transactionUuid = $('#transactionUuid').val();
+    // localStorage.setItem('transactionUuid', transactionUuid);
     // setTimeout(function(){$('#ok').focus();}, 2000);
-  });
+  // });
   
   $(document).on('click', '#ok', function(e) {
   	  e.preventDefault();
@@ -63,8 +63,8 @@
             type:'POST',
             url:url,
             data:{
-              'transactionUuid' : localStorage.getItem("transactionUuid"),
-              'customer_code' : localStorage.getItem("customer_code")
+              'transactionUuid' : transactionUuid,
+              'customer_code' : customer_code
             },
           }).done(function (response) {
             result = JSON.parse(response);
