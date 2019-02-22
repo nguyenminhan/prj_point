@@ -24,7 +24,7 @@ class PointsController extends Controller
 
 		$data_all = $request->all();
         $count_point = DB::table(env('MODEL_TABLE'))
-        ->where('transactionUuid', '=', $request->transactionUuid)
+        ->where('transactionUuid', '=', $data_all['transactionUuid'])
         // ->where('customerCode', '=', $request->customer_code)
         ->count();
 
