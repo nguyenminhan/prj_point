@@ -21,9 +21,9 @@ class PointsController extends Controller
     }
 
     public function getpoint(Request $request){
+        
 		$data_all = $request->all();
-
-        $count_point = DB::table('point')
+        $count_point = DB::table(env('MODEL_TABLE'))
         ->where('transactionUuid', '=', $request->transactionUuid)
         // ->where('customerCode', '=', $request->customer_code)
         ->count();
@@ -130,7 +130,7 @@ class PointsController extends Controller
  		$point_total = (int)$point_current + $point_new;
 
         // check receipt quá 3 tháng thì k được update point
-        // 
+         
         $date_api = $rs['result'][0]['transactionDateTime'];
         $date_api = strtotime($date_api);
         // $date_api = date('Y-m-d H:i:s', $date_api);
