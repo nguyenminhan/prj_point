@@ -25,10 +25,9 @@ class PointsController extends Controller
 		$data_all = $request->all();
         $count_point = DB::table(env('MODEL_TABLE'))
         ->where('transactionUuid', '=', $data_all['transactionUuid'])
-        // ->where('customerCode', '=', $request->customer_code)
         ->count();
 
-// dd($count_point);
+
         if($count_point > 0) {
             return json_encode(array(
                 'error_code'  => 8,
@@ -39,7 +38,10 @@ class PointsController extends Controller
         // goi api tra ve transactionHeadId
         
         $item = [
-    		["transactionUuid" => $data_all['transactionUuid']]
+    		[
+                "transactionUuid" => $data_all['transactionUuid'],
+                "transactionHeadDivision" => 1
+            ]
     	];
     	$params = [
             "conditions" => $item ,
