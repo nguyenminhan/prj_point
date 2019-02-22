@@ -34,6 +34,7 @@ class PointsController extends Controller
                 'error_code'  => 8,
                 'error_msg' => 'すでにこのレシートは登録されています。'
             ));
+            die;
         }
         // goi api tra ve transactionHeadId
         
