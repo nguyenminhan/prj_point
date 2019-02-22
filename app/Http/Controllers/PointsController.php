@@ -21,7 +21,7 @@ class PointsController extends Controller
     }
 
     public function getpoint(Request $request){
-        
+
 		$data_all = $request->all();
         $count_point = DB::table(env('MODEL_TABLE'))
         ->where('transactionUuid', '=', $request->transactionUuid)
@@ -94,17 +94,44 @@ class PointsController extends Controller
             $point_current =  $rs1['result'][0]['point'];
         }       
 
+
+        // $date_api = date('Y-m-d H:i:s', $date_api);
+        // echo $date_api."<br>";
+       
+        
+
     	// goi api tra ve price
     	$price_api = 0;
+        $check1 = false;
     	foreach ($get_point  as  $value) {
-            if($get_customer == $value['customerCode']) {
-                return json_encode(array(
-                    'error_code'  => 6,
-                    'error_msg' => 'すでにこのレシートは登録されています。'
-                ));
+            // check receipt quá 3 tháng thì k được update point
+            // echo $date_current."<br>";die;
+            $date_api = $value['transactionDateTime'];
+            $date_api = strtotime($date_api);
+                // $date_api = date('Y-m-d H:i:s', $date_api);
+            $date_api = mktime(date("H",$date_api), date("i",$date_api), date("s",$date_api), date("m", $date_api)+3, date("d", $date_api),   date("Y", $date_api));
+            $date_current = date('Y-m-d H:i:s');
+            $date_current = strtotime($date_current);
+            if($date_api >= $date_current){
+                if($get_customer == $value['customerCode']) {
+                    return json_encode(array(
+                        'error_code'  => 6,
+                        'error_msg' => 'すでにこのレシートは登録されています。'
+                    ));
+                    }
+                $price_api += $value['subtotal'];
+                $check1 = true;
+                break;    
             }
-    		$price_api += $value['subtotal']; 			
+            	
     	}
+        if(!$check1){
+            return json_encode(array(
+                'error_code'  => 9,
+                'error_msg' => 'レシートの期限は三か月までです。このレシートは期限切れになりました。'
+            ));
+            exit();
+        }
     	$jsonRank = file_get_contents(base_path('resources/lang/rank.json'));
     	$jsonRank = json_decode($jsonRank, true);
     	$rank = $rs1['result'][0]['rank'];
@@ -129,34 +156,19 @@ class PointsController extends Controller
 
  		$point_total = (int)$point_current + $point_new;
 
-        // check receipt quá 3 tháng thì k được update point
-         
-        $date_api = $rs['result'][0]['transactionDateTime'];
-        $date_api = strtotime($date_api);
-        // $date_api = date('Y-m-d H:i:s', $date_api);
-        $date_api = mktime(date("H",$date_api), date("i",$date_api), date("s",$date_api), date("m", $date_api)+3, date("d", $date_api),   date("Y", $date_api));
-        // $date_api = date('Y-m-d H:i:s', $date_api);
-        // echo $date_api."<br>";
        
-        $date_current = date('Y-m-d H:i:s');
-        $date_current = strtotime($date_current);
-        // echo $date_current."<br>";die;
-        if($date_api < $date_current){
-            return json_encode(array(
-                'error_code'  => 9,
-                'error_msg' => 'レシートの期限は三か月までです。このレシートは期限切れになりました。'
-            ));
-            exit();
-        }else{
+    
             $data_point = [
             'transactionUuid' => $data_all['transactionUuid'],
             'customerCode'    => $data_all['customer_code'],
             'point_current'   => $point_current,
             'point_new'       => $point_new,
-            'point_total'     => $point_total
+            'point_total'     => $point_total,
+            'create_at'       => date('Y-m-d H:i:s'),
+            'update_at'       => date('Y-m-d H:i:s')
             ];
 
-            DB::table('point')->insert($data_point);
+            DB::table(env('MODEL_TABLE'))->insert($data_point);
 
             $update_point = $this->updatePoint($point_total,$rs1['result'][0]['customerId']);
             // return $update_point;
@@ -165,7 +177,7 @@ class PointsController extends Controller
                 'id' => $update_point,
                 
             ));
-        }	
+  
 
     }
 
