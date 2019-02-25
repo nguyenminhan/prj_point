@@ -71,12 +71,15 @@
 
             if (result.error_code != 0) {
                 if(result.error_code == 6) {
-                  swal("",result.error_msg, "warning");  
+                  swal("エラーになりました。",result.error_msg, "warning");  
                   return;   
                 }else if(result.error_code == 5){
                   swal("エラーになりました。",result.error_msg, "warning");   
                   return;
                 }else if(result.error_code == 4){
+                  swal("エラーになりました。",result.error_msg, "warning");   
+                  return;
+                }else if(result.error_code == 3){
                   swal("エラーになりました。",result.error_msg, "warning");   
                   return;
                 }else if(result.error_code == 7){

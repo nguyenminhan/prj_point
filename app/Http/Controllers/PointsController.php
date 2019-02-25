@@ -16,12 +16,11 @@ class PointsController extends Controller
     {
         $this->pointapi = new APIHelper();
     }
-    public function point(){
+    public function point(Request $request){
     	return view('point.index');
     }
 
     public function getpoint(Request $request){
-
 		$data_all = $request->all();
         $count_point = DB::table(env('MODEL_TABLE'))
         ->where('transactionUuid', '=', $data_all['transactionUuid'])
@@ -41,8 +40,6 @@ class PointsController extends Controller
     		[
                 "transactionUuid" => $data_all['transactionUuid'],
                 "transactionHeadDivision" => "1",
-                "storeId <>" => "1",
-                "storeId <>" => "39",
                 "storeId <>" => "40"
             ]
     	];
@@ -58,11 +55,25 @@ class PointsController extends Controller
     	$rs =  $this->pointapi->getApi($data);
 		$rs = json_decode($rs,true);
 
-         
+
       
 
 
     	$get_point = $rs['result'];
+        $check2 = false;
+        foreach ($get_point as $value) {
+            if ($value['storeId'] != "39" &&  $value['storeId'] != "1") {
+                $check2 = true;
+                break;
+            }
+        }
+        if(!$check2){
+            return json_encode(array(
+                'error_code'  => 3,
+                'error_msg' => 'エラーが発生しました'
+            ));
+            die;
+        }
         if(empty($get_point)) {
             return json_encode(array(
                 'error_code'  => 4,
