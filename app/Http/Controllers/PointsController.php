@@ -55,11 +55,14 @@ class PointsController extends Controller
     	$rs =  $this->pointapi->getApi($data);
 		$rs = json_decode($rs,true);
 
-
-      
-
-
     	$get_point = $rs['result'];
+        if(empty($get_point)) {
+            return json_encode(array(
+                'error_code'  => 4,
+                'error_msg' => 'レシートIDが存在しません。'
+            ));
+            die;
+        }
         $check2 = false;
         foreach ($get_point as $value) {
             if ($value['storeId'] != "39" &&  $value['storeId'] != "1") {
@@ -74,13 +77,7 @@ class PointsController extends Controller
             ));
             die;
         }
-        if(empty($get_point)) {
-            return json_encode(array(
-                'error_code'  => 4,
-                'error_msg' => 'レシートIDが存在しません。'
-            ));
-            die;
-        }
+        
 
     	// goi api tra ve customer
     	$item1 = [
@@ -230,31 +227,6 @@ class PointsController extends Controller
 
     }
 
-    // public function getPriceByTractionHeadID($transactionHeadId){
-
-    // 	$item = [
-    // 		["transactionHeadId" => $transactionHeadId]
-    // 	];
-
-    //     $params = [
-    //             "conditions" => $item,
-    //             "order" => ["transactionHeadId","transactionDetailId"],
-    //             "table_name" => "TransactionDetail"
-    //             ];
-    //     $data = [
-    //         "proc_name" => "transaction_ref",
-    //         "params" => json_encode($params, true)
-    //     ];
-
-    //     $rs =  $this->pointapi->getApi($data);
-    //     $rs = json_decode($rs,true);
-
-    //     $price=0;
-    // 	foreach ($rs['result']  as  $value) {
-    // 		$price+=($value['salesPrice'] * $value['quantity']) ;
-    // 	}
-    //     return $price;
-    // }
     public function updatePoint($point,$customer_id){
     	$proc_info = [
 	    		"proc_division" => "U",
@@ -320,7 +292,6 @@ class PointsController extends Controller
         ];          
         $rs = $this->pointapi->getApi($customer_update);
         return $rs;
-        // return $pointExpireDate;
     }
     
 }
