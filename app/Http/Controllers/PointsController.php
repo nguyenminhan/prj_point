@@ -16,7 +16,8 @@ class PointsController extends Controller
     {
         $this->pointapi = new APIHelper();
     }
-    public function point(Request $request){
+    public function point(){
+       
     	return view('point.index');
     }
 
@@ -110,8 +111,6 @@ class PointsController extends Controller
             $lastName = $rs1['result'][0]['lastName'];
             $firstName = $rs1['result'][0]['firstName'];
             $sex = $rs1['result'][0]['sex'];
-            $pointGivingUnitPrice = $rs1['result'][0]['pointGivingUnitPrice'];
-            $pointGivingUnit = $rs1['result'][0]['pointGivingUnit'];
             $customerNo =  $rs1['result'][0]['customerNo'];
         }       
 
@@ -149,7 +148,7 @@ class PointsController extends Controller
                     $terminalTranDateTime_api = mktime(date("H",$terminalTranDateTime_api), date("i",$terminalTranDateTime_api), date("s",$terminalTranDateTime_api), date("m", $terminalTranDateTime_api), date("d", $terminalTranDateTime_api),   date("Y", $terminalTranDateTime_api)+1);
                     $terminalTranDateTime_api = date('Y-m-d', $terminalTranDateTime_api);
 
-                    $this->updateCustomer($customerId,$get_customer,$customerNo,$lastName,$firstName,$sex,$pointGivingUnitPrice, $pointGivingUnit,$terminalTranDateTime_api);
+                    $this->updateCustomer($customerId,$get_customer,$customerNo,$lastName,$firstName,$sex,$terminalTranDateTime_api);
                 }
             }else{
                 return json_encode(array(
@@ -258,7 +257,7 @@ class PointsController extends Controller
         return $point;
     }
 
-    public function updateCustomer($customer_id,$customerCode,$customerNo,$lastName,$firstName,$sex,$pointGivingUnitPrice,$pointGivingUnit,$pointExpireDate){
+    public function updateCustomer($customer_id,$customerCode,$customerNo,$lastName,$firstName,$sex,$pointExpireDate){
         $proc_info = [
                 "proc_division" => "U"
         ];
@@ -270,8 +269,6 @@ class PointsController extends Controller
                 "lastName" =>$lastName ,
                 "firstName" =>$firstName ,
                 "sex" => $sex,
-                "pointGivingUnitPrice" =>$pointGivingUnitPrice ,
-                "pointGivingUnit" =>$pointGivingUnit ,
                 "pointExpireDate" => $pointExpireDate
             ]
         ];
