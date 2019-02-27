@@ -5,6 +5,7 @@
 
   $(document).on('click', '.swal-button', function(e) {
    	location.reload();
+    $('#ok').attr('disabled', false); 
     // localStorage.setItem("transactionUuid",'')
     // localStorage.setItem("customer_code",'')
     if($('#customer_code').val() == ''){
@@ -31,8 +32,10 @@
   
   $(document).on('click', '#ok', function(e) {
   	  e.preventDefault();
+      $('#ok').attr('disabled', true); 
   	  var customer_code = ($('#customer_code').val()).trim();
   	  var transactionUuid = ($('#transactionUuid').val()).trim();
+
 
       // if(customer_code){
       //   var value = localStorage.getItem("customer_code") === null ? "": localStorage.getItem("customer_code")
@@ -93,7 +96,8 @@
                   return;
                 }              
             }
-            swal("ポイント付与完了しました。", "今のポイントは"+result.id+"です", "success");           
+            swal("ポイント付与完了しました。", "今のポイントは"+result.id+"です", "success");   
+            $('#ok').attr('disabled', false);         
             $('#customer_code').focus();
             $('#transactionUuid').val(null);
             $('#customer_code').val(null);
